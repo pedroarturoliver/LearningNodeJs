@@ -1,5 +1,6 @@
 const http = require('http');
-const fs = require('fs')
+const fs = require('fs');
+const { parse } = require('path');
 
 
 const server = http.createServer((req, res) => {
@@ -13,15 +14,29 @@ const server = http.createServer((req, res) => {
         return res.end();
     }
     if(url === '/message' && method === 'POST') {
-        fs.writeFile('message.txt', 'DUMMY', (err) => {
+        const body = [];
+        req.on('data', (chunk) => {
+            console.log(chunk)
+            body.push(chunk);
+        });
+        req.on('end', () => {
+            console.log(body)
+            let parsedBody = Buffer.concat(body);
+            console.log(parsedBody);
+            parsedBody = parsedBody.toString();
+            console.log(parsedBody);
+            const message = parsedBody.split('=')[1];
+            fs.writeFile('message.txt', message, (err) => {
             if (err) {
-
+                
                 console.log(err);
                 res.statusCode = 500;
                 return res.end('Erro');
 
             }
         });
+        })
+        
         res.statusCode = 302;
         res.setHeader('Location', '/');
         return res.end();
