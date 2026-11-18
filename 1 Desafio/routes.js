@@ -51,27 +51,26 @@ const requestHandler = (req, res) => {
         {
             const body = []
 
-            req.on('data', (chunk) => 
-            
-            {
-                console.log(chunk)
+            req.on('data', (chunk) => {
+                // console.log(chunk)
                 body.push(chunk);
             });
 
-            return req.on('end', () => {
+            req.on('end', () => {
 
-                console.log(body)
+                // console.log(body)
                 let parsedBody = Buffer.concat(body);
-                console.log(parsedBody);
+                // console.log(parsedBody);
                 parsedBody = parsedBody.toString();
-                console.log(parsedBody);
+                console.log(parsedBody.split('=')[1]);
                 res.statusCode = 302;
                 res.setHeader('Location', '/user');
-                return res.end();
-                
-            });
+                res.end()
 
+            });
+            return;
     }
+
         res.statusCode = 404;
         return res.end()
 
