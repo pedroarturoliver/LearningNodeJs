@@ -25,14 +25,17 @@ const requestHandler = (req, res) => {
             let parsedBody = Buffer.concat(body);
             console.log(parsedBody);
             parsedBody = parsedBody.toString();
+            
             console.log(parsedBody);
             const message = parsedBody.split('=')[1];
             fs.writeFile('message.txt', message, (err) => {
             if (err) {
-                
                 console.log(err);
                 res.statusCode = 500;
+
                 return res.end('Erro');
+                
+
 
             }
 
