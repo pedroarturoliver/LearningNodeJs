@@ -5,7 +5,7 @@ const rootDir = require('../utils/path')
 
 router.use('/', (req, res, next) => {
 
-    res.status(404).sendFile(path.join(rootDir, 'views', 'erro.html'));
+    res.status(404).sendFile(path.join(rootDir, 'views', '404.html'));
 
 });
 
